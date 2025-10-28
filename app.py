@@ -107,6 +107,13 @@ def load_default_result():
         with open('chirag_both.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
+        # Try alternative files
+        for filename in ['chirag_both_clean.json', 'chirag.json', 'output_both.json']:
+            try:
+                with open(filename, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            except FileNotFoundError:
+                continue
         return {"message": "No default result available"}
 
 @st.cache_data
@@ -387,12 +394,40 @@ def main():
         st.title("📄 ISEC Contract Note Data Extractor")
         st.markdown("Extract structured data from ISEC (ICICI Securities) contract notes using OpenAI")
 
-        # Load defaults
-        config = load_config()
-        default_system_prompt = load_default_system_prompt()
-        default_position_prompt = load_default_position_prompt()
-        default_result = load_default_result()
-        compact_schema = load_compact_schema()
+        # Load defaults with better error handling
+        try:
+            config = load_config()
+        except Exception as e:
+            st.error(f"Error loading config: {str(e)}")
+            config = {
+                "openai": {"default_model": "gpt-4o", "max_tokens": 8000, "temperature": 0.1},
+                "pdf_reduction": {"enabled": True, "max_file_size_mb": 0.1}
+            }
+
+        try:
+            default_system_prompt = load_default_system_prompt()
+        except Exception as e:
+            st.warning(f"Error loading system prompt: {str(e)}")
+            default_system_prompt = "# System Prompt\nExtract data from ISEC contract notes."
+
+        try:
+            default_position_prompt = load_default_position_prompt()
+        except Exception as e:
+            st.warning(f"Error loading position prompt: {str(e)}")
+            default_position_prompt = "# Position Prompt\nExtract ISEC contract note data."
+
+        try:
+            default_result = load_default_result()
+        except Exception as e:
+            st.warning(f"Error loading default result: {str(e)}")
+            default_result = {"message": "No default result available"}
+
+        try:
+            compact_schema = load_compact_schema()
+        except Exception as e:
+            st.warning(f"Error loading compact schema: {str(e)}")
+            compact_schema = {}
+
     except Exception as e:
         st.error(f"Error initializing app: {str(e)}")
         logger.error(f"Initialization error: {str(e)}", exc_info=True)
