@@ -18,6 +18,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Load environment variables
+# Try to load from .env file (local development)
 try:
     from dotenv import load_dotenv
     load_dotenv()
@@ -30,6 +31,16 @@ except ImportError:
                 if line and not line.startswith('#') and '=' in line:
                     key, value = line.split('=', 1)
                     os.environ[key.strip()] = value.strip()
+
+# For Streamlit Cloud: Check if API key is in secrets
+# If not in environment, try to get from Streamlit secrets
+if 'OPENAI_API_KEY' not in os.environ or not os.environ.get('OPENAI_API_KEY'):
+    try:
+        if hasattr(st, 'secrets') and 'OPENAI_API_KEY' in st.secrets:
+            os.environ['OPENAI_API_KEY'] = st.secrets['OPENAI_API_KEY']
+            logger.info("Loaded API key from Streamlit secrets")
+    except Exception as e:
+        logger.warning(f"Could not load from Streamlit secrets: {e}")
 
 # Page configuration
 st.set_page_config(
@@ -402,7 +413,11 @@ def main():
             st.success("✅ API Key Loaded")
         else:
             st.error("❌ API Key Not Found")
-            st.info("Set OPENAI_API_KEY environment variable")
+            # Check if running on Streamlit Cloud
+            if 'STREAMLIT_SHARING_MODE' in os.environ or 'STREAMLIT_RUNTIME_ENV' in os.environ:
+                st.info("💡 Add OPENAI_API_KEY to Streamlit Secrets:\n\n1. Go to App Settings\n2. Click 'Secrets'\n3. Add: `OPENAI_API_KEY = \"your-key-here\"`")
+            else:
+                st.info("Set OPENAI_API_KEY in .env file or environment variable")
         
         st.divider()
         
