@@ -1,0 +1,126 @@
+{
+  "type": "object",
+  "properties": {
+    "header": {
+      "type": "object",
+      "properties": {
+        "contract_note_no": {"type": "string"},
+        "trade_date": {"type": "string"},
+        "settlement_no": {"type": "string"},
+        "settlement_date": {"type": "string"},
+        "client_id": {"type": "string"},
+        "client_name": {"type": "string"}
+      },
+      "required": ["contract_note_no", "trade_date", "settlement_no", "settlement_date", "client_id", "client_name"]
+    },
+    "transactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "isin": {"type": "string"},
+          "security_name": {"type": "string"},
+          "buy_quantity": {"type": "number"},
+          "buy_weighted_average_price": {"type": "number"},
+          "buy_brokerage_per_share": {"type": "number"},
+          "buy_wap_after_brokerage": {"type": "number"},
+          "buy_total_trade_value_after_brokerage": {"type": "number"},
+          "buy_exchange_transaction_charges": {"type": "number"},
+          "buy_sebi_turnover_charges": {"type": "number"},
+          "buy_total_gst": {"type": "number"},
+          "buy_stamp_duty": {"type": "number"},
+          "buy_securities_transaction_tax": {"type": "number"},
+          "buy_net_payable_receivable": {"type": "number"},
+          "sell_quantity": {"type": "number"},
+          "sell_weighted_average_price": {"type": "number"},
+          "sell_brokerage_per_share": {"type": "number"},
+          "sell_wap_after_brokerage": {"type": "number"},
+          "sell_total_trade_value_after_brokerage": {"type": "number"},
+          "sell_exchange_transaction_charges": {"type": "number"},
+          "sell_sebi_turnover_charges": {"type": "number"},
+          "sell_total_gst": {"type": "number"},
+          "sell_stamp_duty": {"type": "number"},
+          "sell_securities_transaction_tax": {"type": "number"},
+          "sell_net_payable_receivable": {"type": "number"},
+          "total_quantity": {"type": "number"},
+          "total_total_trade_value_after_brokerage": {"type": "number"},
+          "total_exchange_transaction_charges": {"type": "number"},
+          "total_sebi_turnover_charges": {"type": "number"},
+          "total_gst": {"type": "number"},
+          "total_stamp_duty": {"type": "number"},
+          "total_securities_transaction_tax": {"type": "number"},
+          "total_net_payable_receivable": {"type": "number"}
+        },
+        "required": [
+          "isin", "security_name",
+          "buy_quantity", "buy_weighted_average_price", "buy_brokerage_per_share",
+          "buy_wap_after_brokerage", "buy_total_trade_value_after_brokerage",
+          "buy_exchange_transaction_charges", "buy_sebi_turnover_charges",
+          "buy_total_gst", "buy_stamp_duty", "buy_securities_transaction_tax",
+          "buy_net_payable_receivable",
+          "sell_quantity", "sell_weighted_average_price", "sell_brokerage_per_share",
+          "sell_wap_after_brokerage", "sell_total_trade_value_after_brokerage",
+          "sell_exchange_transaction_charges", "sell_sebi_turnover_charges",
+          "sell_total_gst", "sell_stamp_duty", "sell_securities_transaction_tax",
+          "sell_net_payable_receivable",
+          "total_quantity", "total_total_trade_value_after_brokerage",
+          "total_exchange_transaction_charges", "total_sebi_turnover_charges",
+          "total_gst", "total_stamp_duty", "total_securities_transaction_tax",
+          "total_net_payable_receivable"
+        ]
+      }
+    },
+    "obligations": {
+      "type": "object",
+      "properties": {
+        "pay_out_obligation": {"type": "number"},
+        "taxable_value_of_supply": {
+          "type": "object",
+          "properties": {
+            "total_brokerage": {"type": "number"},
+            "exchange_transaction_charges": {"type": "number"},
+            "sebi_turnover_fees": {"type": "number"},
+            "total_taxable_value": {"type": "number"}
+          },
+          "required": ["total_brokerage", "exchange_transaction_charges", "sebi_turnover_fees", "total_taxable_value"]
+        },
+        "gst_details": {
+          "type": "object",
+          "properties": {
+            "cgst_rate": {"type": "number"},
+            "cgst_brokerage_amount": {"type": "number"},
+            "cgst_charges_amount": {"type": "number"},
+            "cgst_total_amount": {"type": "number"},
+            "sgst_rate": {"type": "number"},
+            "sgst_brokerage_amount": {"type": "number"},
+            "sgst_charges_amount": {"type": "number"},
+            "sgst_total_amount": {"type": "number"},
+            "igst_rate": {"type": "number"},
+            "igst_brokerage_amount": {"type": "number"},
+            "igst_charges_amount": {"type": "number"},
+            "igst_total_amount": {"type": "number"}
+          },
+          "required": [
+            "cgst_rate", "cgst_brokerage_amount", "cgst_charges_amount", "cgst_total_amount",
+            "sgst_rate", "sgst_brokerage_amount", "sgst_charges_amount", "sgst_total_amount",
+            "igst_rate", "igst_brokerage_amount", "igst_charges_amount", "igst_total_amount"
+          ]
+        },
+        "securities_transaction_tax": {"type": "number"},
+        "stamp_duty": {"type": "number"},
+        "net_amount_receivable_by_client": {"type": "number"},
+        "net_amount_to_be_credited_in_bank": {"type": "number"}
+      },
+      "required": [
+        "pay_out_obligation",
+        "taxable_value_of_supply",
+        "gst_details",
+        "securities_transaction_tax",
+        "stamp_duty",
+        "net_amount_receivable_by_client",
+        "net_amount_to_be_credited_in_bank"
+      ]
+    }
+  },
+  "required": ["header", "transactions", "obligations"]
+}

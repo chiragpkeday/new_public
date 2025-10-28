@@ -1,0 +1,61 @@
+{
+  "env": {
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.5-air",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6",
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "ANTHROPIC_AUTH_TOKEN": "2c49db3e7f524e498db31cffa5c92b63.LOFwy1WUkEbUYuIz"
+  },
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(set:*)",
+      "Bash(uvx:*)",
+      "Bash(python:*)",
+      "mcp__google-sheets__list_spreadsheets",
+      "mcp__google-sheets__get_sheet_data",
+      "mcp__google-sheets__list_sheets",
+      "mcp__google-sheets__add_columns",
+      "mcp__google-sheets__update_cells",
+      "Bash(cat:*)",
+      "Bash(claude mcp__google-sheets__list_spreadsheets:*)",
+      "Bash(claude:*)",
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "mcp__google-sheets__create_sheet",
+      "mcp__google-sheets__get_sheet_formulas",
+      "mcp__google-sheets__get_multiple_spreadsheet_summary",
+      "mcp__google-sheets__read_sheet",
+      "mcp__supabase__list_tables",
+      "mcp__supabase__get_project_url",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__get_anon_key",
+      "mcp__supabase__execute_sql",
+      "Bash(gcloud logging read:*)",
+      "Bash(gcloud auth application-default login:*)",
+      "Bash(gcloud auth application-default print-access-token:*)",
+      "Bash(timeout:*)",
+      "Bash(pip install:*)",
+      "Bash(gcloud:*)",
+      "Bash(docker build:*)",
+      "Bash(docker push:*)",
+      "Bash(echo \"Please follow these steps manually:\n\n1. Open this URL in your browser:\nhttps://accounts.google.com/o/oauth2/auth?response_type=code&client_id=803235585404-1napl4fdg6u8ojd31lu4ricg5ccrra0e.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.readonly&access_type=offline&include_granted_scopes=true&prompt=consent\n\n2. Login with tech@pkeday.com\n\n3. Grant permission (Google may add extra scopes - that''s okay)\n\n4. You''ll be redirected to: http://localhost:8080/?code=XXXXXXXX\n\n5. Copy the code (the part after ''code='') and paste it below:\n\n\")",
+      "Bash(find:*)",
+      "Bash(dir:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase",
+    "memory",
+    "executeautomation-playwright-server",
+    "github",
+    "fetch",
+    "DeepGraph Next.js MCP",
+    "DeepGraph TypeScript MCP",
+    "DeepGraph React MCP",
+    "huggingface"
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ISEC Contract Note Data Schema",
+  "description": "Schema for extracting financial data from ISEC (ICICI Securities) contract notes",
+  "type": "object",
+  "properties": {
+    "header": {
+      "type": "object",
+      "description": "Header information from the contract note",
+      "properties": {
+        "contract_note_no": {
+          "type": "string",
+          "description": "Unique contract note identifier"
+        },
+        "trade_date": {
+          "type": "string",
+          "description": "Date when trades were executed (format: DD/MM/YYYY or similar)"
+        },
+        "settlement_no": {
+          "type": "string",
+          "description": "Settlement number for the trades"
+        },
+        "settlement_date": {
+          "type": "string",
+          "description": "Date when settlement will occur (format: DD/MM/YYYY or similar)"
+        },
+        "client_id": {
+          "type": "string",
+          "description": "Trading Client Code from Annexure section"
+        },
+        "client_name": {
+          "type": "string",
+          "description": "Trading Client Name from Annexure section"
+        }
+      },
+      "required": ["contract_note_no", "trade_date", "settlement_no", "settlement_date", "client_id", "client_name"]
+    },
+    "transactions": {
+      "type": "array",
+      "description": "Array of security transactions extracted from Summary tables",
+      "items": {
+        "type": "object",
+        "properties": {
+          "isin": {
+            "type": "string",
+            "description": "International Securities Identification Number (12 characters)",
+            "pattern": "^[A-Z]{2}[0-9A-Z]{10}$"
+          },
+          "security_name": {
+            "type": "string",
+            "description": "Name of the security/stock"
+          },
+          "buy_quantity": {
+            "type": "number",
+            "description": "Quantity of shares bought (from Buy row)"
+          },
+          "buy_weighted_average_price": {
+            "type": "number",
+            "description": "Weighted average price per share for buy transactions"
+          },
+          "buy_brokerage_per_share": {
+            "type": "number",
+            "description": "Brokerage charged per share for buy transactions"
+          },
+          "buy_wap_after_brokerage": {
+            "type": "number",
+            "description": "Weighted average price after adding brokerage for buy transactions"
+          },
+          "buy_total_trade_value_after_brokerage": {
+            "type": "number",
+            "description": "Total trade value including brokerage for buy transactions"
+          },
+          "buy_exchange_transaction_charges": {
+            "type": "number",
+            "description": "Exchange transaction charges for buy transactions"
+          },
+          "buy_sebi_turnover_charges": {
+            "type": "number",
+            "description": "SEBI turnover charges for buy transactions"
+          },
+          "buy_total_gst": {
+            "type": "number",
+            "description": "Total GST charged on buy transactions"
+          },
+          "buy_stamp_duty": {
+            "type": "number",
+            "description": "Stamp duty for buy transactions"
+          },
+          "buy_securities_transaction_tax": {
+            "type": "number",
+            "description": "Securities Transaction Tax for buy transactions"
+          },
+          "buy_net_payable_receivable": {
+            "type": "number",
+            "description": "Net amount payable/receivable for buy transactions (positive = payable)"
+          },
+          "sell_quantity": {
+            "type": "number",
+            "description": "Quantity of shares sold (from Sell row)"
+          },
+          "sell_weighted_average_price": {
+            "type": "number",
+            "description": "Weighted average price per share for sell transactions"
+          },
+          "sell_brokerage_per_share": {
+            "type": "number",
+            "description": "Brokerage charged per share for sell transactions"
+          },
+          "sell_wap_after_brokerage": {
+            "type": "number",
+            "description": "Weighted average price after adding brokerage for sell transactions"
+          },
+          "sell_total_trade_value_after_brokerage": {
+            "type": "number",
+            "description": "Total trade value including brokerage for sell transactions"
+          },
+          "sell_exchange_transaction_charges": {
+            "type": "number",
+            "description": "Exchange transaction charges for sell transactions"
+          },
+          "sell_sebi_turnover_charges": {
+            "type": "number",
+            "description": "SEBI turnover charges for sell transactions"
+          },
+          "sell_total_gst": {
+            "type": "number",
+            "description": "Total GST charged on sell transactions"
+          },
+          "sell_stamp_duty": {
+            "type": "number",
+            "description": "Stamp duty for sell transactions"
+          },
+          "sell_securities_transaction_tax": {
+            "type": "number",
+            "description": "Securities Transaction Tax for sell transactions"
+          },
+          "sell_net_payable_receivable": {
+            "type": "number",
+            "description": "Net amount payable/receivable for sell transactions (negative = receivable)"
+          },
+          "total_quantity": {
+            "type": "number",
+            "description": "Total quantity from Total Payable/Receivable row (preserve sign)"
+          },
+          "total_total_trade_value_after_brokerage": {
+            "type": "number",
+            "description": "Total trade value from Total Payable/Receivable row (preserve sign)"
+          },
+          "total_exchange_transaction_charges": {
+            "type": "number",
+            "description": "Total exchange transaction charges from Total row"
+          },
+          "total_sebi_turnover_charges": {
+            "type": "number",
+            "description": "Total SEBI turnover charges from Total row"
+          },
+          "total_gst": {
+            "type": "number",
+            "description": "Total GST from Total row"
+          },
+          "total_stamp_duty": {
+            "type": "number",
+            "description": "Total stamp duty from Total row"
+          },
+          "total_securities_transaction_tax": {
+            "type": "number",
+            "description": "Total Securities Transaction Tax from Total row"
+          },
+          "total_net_payable_receivable": {
+            "type": "number",
+            "description": "Total net amount payable/receivable (negative = receivable by client)"
+          }
+        },
+        "required": [
+          "isin", "security_name",
+          "buy_quantity", "buy_weighted_average_price", "buy_brokerage_per_share",
+          "buy_wap_after_brokerage", "buy_total_trade_value_after_brokerage",
+          "buy_exchange_transaction_charges", "buy_sebi_turnover_charges",
+          "buy_total_gst", "buy_stamp_duty", "buy_securities_transaction_tax",
+          "buy_net_payable_receivable",
+          "sell_quantity", "sell_weighted_average_price", "sell_brokerage_per_share",
+          "sell_wap_after_brokerage", "sell_total_trade_value_after_brokerage",
+          "sell_exchange_transaction_charges", "sell_sebi_turnover_charges",
+          "sell_total_gst", "sell_stamp_duty", "sell_securities_transaction_tax",
+          "sell_net_payable_receivable",
+          "total_quantity", "total_total_trade_value_after_brokerage",
+          "total_exchange_transaction_charges", "total_sebi_turnover_charges",
+          "total_gst", "total_stamp_duty", "total_securities_transaction_tax",
+          "total_net_payable_receivable"
+        ]
+      }
+    },
+    "obligations": {
+      "type": "object",
+      "description": "Pay Out Obligation details from last 2nd page",
+      "properties": {
+        "pay_out_obligation": {
+          "type": "number",
+          "description": "Amount appearing immediately before 'Pay out Obligation' text"
+        },
+        "taxable_value_of_supply": {
+          "type": "object",
+          "description": "Taxable value breakdown for GST calculation",
+          "properties": {
+            "total_brokerage": {
+              "type": "number",
+              "description": "Amount appearing immediately before 'a) Total brokerage'"
+            },
+            "exchange_transaction_charges": {
+              "type": "number",
+              "description": "Amount appearing immediately before 'b) Exchange Transaction Charges'"
+            },
+            "sebi_turnover_fees": {
+              "type": "number",
+              "description": "Amount appearing immediately before 'c) SEBI Turnover Fees'"
+            },
+            "total_taxable_value": {
+              "type": "number",
+              "description": "Amount appearing immediately before 'Total Taxable value of supply (a+b+c)'"
+            }
+          },
+          "required": ["total_brokerage", "exchange_transaction_charges", "sebi_turnover_fees", "total_taxable_value"]
+        },
+        "gst_details": {
+          "type": "object",
+          "description": "GST breakdown with rates and amounts",
+          "properties": {
+            "cgst_rate": {
+              "type": "number",
+              "description": "CGST percentage rate from 'CGST* Rate(percentage%)'"
+            },
+            "cgst_brokerage_amount": {
+              "type": "number",
+              "description": "CGST amount on brokerage (first numeric value after CGST rate)"
+            },
+            "cgst_charges_amount": {
+              "type": "number",
+              "description": "CGST amount on charges (second numeric value after CGST rate)"
+            },
+            "cgst_total_amount": {
+              "type": "number",
+              "description": "Total CGST amount after ` symbol"
+            },
+            "sgst_rate": {
+              "type": "number",
+              "description": "SGST/UTGST percentage rate from 'SGST/UTGST* Rate (percentage%)'"
+            },
+            "sgst_brokerage_amount": {
+              "type": "number",
+              "description": "SGST amount on brokerage (first numeric value after SGST rate)"
+            },
+            "sgst_charges_amount": {
+              "type": "number",
+              "description": "SGST amount on charges (second numeric value after SGST rate)"
+            },
+            "sgst_total_amount": {
+              "type": "number",
+              "description": "Total SGST amount after ` symbol"
+            },
+            "igst_rate": {
+              "type": "number",
+              "description": "IGST percentage rate from 'IGST* Rate(percentage%)'"
+            },
+            "igst_brokerage_amount": {
+              "type": "number",
+              "description": "IGST amount on brokerage (first numeric value after IGST rate)"
+            },
+            "igst_charges_amount": {
+              "type": "number",
+              "description": "IGST amount on charges (second numeric value after IGST rate)"
+            },
+            "igst_total_amount": {
+              "type": "number",
+              "description": "Total IGST amount after ` symbol"
+            }
+          },
+          "required": [
+            "cgst_rate", "cgst_brokerage_amount", "cgst_charges_amount", "cgst_total_amount",
+            "sgst_rate", "sgst_brokerage_amount", "sgst_charges_amount", "sgst_total_amount",
+            "igst_rate", "igst_brokerage_amount", "igst_charges_amount", "igst_total_amount"
+          ]
+        },
+        "securities_transaction_tax": {
+          "type": "number",
+          "description": "STT amount after 'e) Securities Transaction Tax** `'"
+        },
+        "stamp_duty": {
+          "type": "number",
+          "description": "Stamp duty amount after 'f) Stamp Duty** `'"
+        },
+        "net_amount_receivable_by_client": {
+          "type": "number",
+          "description": "Net amount receivable by client after 'Net amount receivable by Client `'"
+        },
+        "net_amount_to_be_credited_in_bank": {
+          "type": "number",
+          "description": "Final amount to be credited in bank after 'Net Amount to be Credited in Bank `'"
+        }
+      },
+      "required": [
+        "pay_out_obligation",
+        "taxable_value_of_supply",
+        "gst_details",
+        "securities_transaction_tax",
+        "stamp_duty",
+        "net_amount_receivable_by_client",
+        "net_amount_to_be_credited_in_bank"
+      ]
+    }
+  },
+  "required": ["header", "transactions", "obligations"]
+}

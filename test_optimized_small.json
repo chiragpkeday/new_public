@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "data": {
+    "header": {
+      "contract_note_no": "ISEC/2025083/002615717",
+      "trade_date": "06-05-2025",
+      "settlement_no": "2025083",
+      "settlement_date": "05-05-2025",
+      "client_id": "5550001544",
+      "client_name": "PKEDAY ADVISORS LLP"
+    },
+    "transactions": [
+      {
+        "isin": "INE024L01027",
+        "security_name": "GRAVITA INDIA LIMITED",
+        "buy_quantity": 0,
+        "buy_weighted_average_price": 0.0,
+        "buy_brokerage_per_share": 0.0,
+        "buy_wap_after_brokerage": 0.0,
+        "buy_total_trade_value_after_brokerage": 0.0,
+        "buy_exchange_transaction_charges": 0.0,
+        "buy_sebi_turnover_charges": 0.0,
+        "buy_total_gst": 0.0,
+        "buy_stamp_duty": 0.0,
+        "buy_securities_transaction_tax": 0.0,
+        "buy_net_payable_receivable": 0.0,
+        "sell_quantity": 3027,
+        "sell_weighted_average_price": 1929.9276,
+        "sell_brokerage_per_share": 1.351,
+        "sell_wap_after_brokerage": 1928.5766,
+        "sell_total_trade_value_after_brokerage": 5831004.7452,
+        "sell_exchange_transaction_charges": 179.3468,
+        "sell_sebi_turnover_charges": 5.8422,
+        "sell_total_gst": 769.4158,
+        "sell_stamp_duty": 0.0,
+        "sell_securities_transaction_tax": 5842.0,
+        "sell_net_payable_receivable": -5831004.7452,
+        "total_quantity": 3027,
+        "total_total_trade_value_after_brokerage": 5831004.7452,
+        "total_exchange_transaction_charges": 179.3468,
+        "total_sebi_turnover_charges": 5.8422,
+        "total_gst": 769.4158,
+        "total_stamp_duty": 0.0,
+        "total_securities_transaction_tax": 5842.0,
+        "total_net_payable_receivable": -5831004.7452
+      }
+    ],
+    "obligations": {
+      "pay_out_obligation": 5841890.7,
+      "taxable_value_of_supply": {
+        "total_brokerage": 368.0419,
+        "exchange_transaction_charges": 179.3468,
+        "sebi_turnover_fees": 5.8422,
+        "total_taxable_value": 4274.5405
+      },
+      "gst_details": {
+        "cgst_rate": 9.0,
+        "cgst_brokerage_amount": 16.666,
+        "cgst_charges_amount": 16.666,
+        "cgst_total_amount": 33.332,
+        "sgst_rate": 9.0,
+        "sgst_brokerage_amount": 16.666,
+        "sgst_charges_amount": 16.666,
+        "sgst_total_amount": 33.332,
+        "igst_rate": 0.0,
+        "igst_brokerage_amount": 0.0,
+        "igst_charges_amount": 0.0,
+        "igst_total_amount": 0.0
+      },
+      "securities_transaction_tax": 5842.0,
+      "stamp_duty": 0.0,
+      "net_amount_receivable_by_client": 5831004.7437,
+      "net_amount_to_be_credited_in_bank": 0.0
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "metadata": {
+    "extraction_timestamp": "2025-10-27T18:38:46.335752",
+    "pdf_path": "20250505.pdf",
+    "model_used": "gpt-4o-mini",
+    "file_id": "file-TT73d4Qn9xxHcj7pR2mYvD",
+    "total_transactions": 1,
+    "validation_errors": 0
+  }
+}

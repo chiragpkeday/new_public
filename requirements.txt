@@ -1,0 +1,7 @@
+PyPDF2
+pdfplumber
+python-dateutil
+openai
+python-dotenv
+pypdf
+streamlit
