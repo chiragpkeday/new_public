@@ -1,0 +1,74 @@
+{
+  "header": {
+    "contract_note_no": "ISEC/2024148/015287118",
+    "trade_date": "07-08-2024",
+    "settlement_no": "2024148",
+    "settlement_date": "08-08-2024",
+    "client_id": "5550001544",
+    "client_name": "PKEDAY ADVISORS LLP"
+  },
+  "transactions": [
+    {
+      "isin": "INE572J01011",
+      "security_name": "SPANDANA SPHOORTY FI",
+      "buy_sell": "Sell",
+      "buy_quantity": 2190,
+      "sell_quantity": 54785,
+      "buy_weighted_average_price": 598.4506,
+      "sell_weighted_average_price": 593.5993,
+      "buy_brokerage_per_share": 0.3767,
+      "sell_brokerage_per_share": 0.6087,
+      "buy_wap_after_brokerage": 598.8273,
+      "sell_wap_after_brokerage": 592.9906,
+      "buy_total_trade_value_after_brokerage": 1311431.7978,
+      "sell_total_trade_value_after_brokerage": 32486990.0013,
+      "buy_exchange_transaction_charges": 43.5206,
+      "sell_exchange_transaction_charges": 1079.6834,
+      "buy_sebi_turnover_charges": 1.3129,
+      "sell_sebi_turnover_charges": 32.5325,
+      "buy_total_gst": 156.5508,
+      "sell_total_gst": 6202.506,
+      "buy_stamp_duty": 39.0,
+      "sell_stamp_duty": 0.0,
+      "buy_securities_transaction_tax": 0.0,
+      "sell_securities_transaction_tax": 31555.9975,
+      "buy_net_payable_receivable": 1311672.1821,
+      "sell_net_payable_receivable": -32448119.2819,
+      "total_quantity": 52595.0,
+      "total_total_trade_value_after_brokerage": -31175558.2035,
+      "total_exchange_transaction_charges": 1123.204,
+      "total_sebi_turnover_charges": 33.8454,
+      "total_gst": 6359.0568,
+      "total_stamp_duty": 39.0,
+      "total_securities_transaction_tax": 31555.9975,
+      "total_net_payable_receivable": -31136447.0998
+    }
+  ],
+  "obligations": {
+    "pay_out_obligation": 31209729.4,
+    "taxable_value_of_supply": {
+      "total_brokerage": 34171.1965,
+      "exchange_transaction_charges": 1123.204,
+      "sebi_turnover_fees": 33.8454,
+      "total_taxable_value": 35328.2459
+    },
+    "gst_details": {
+      "cgst_rate": 9.0,
+      "cgst_brokerage_amount": 3075.4142,
+      "cgst_charges_amount": 104.1142,
+      "cgst_total_amount": 3179.5284,
+      "sgst_rate": 9.0,
+      "sgst_brokerage_amount": 3075.4142,
+      "sgst_charges_amount": 104.1142,
+      "sgst_total_amount": 3179.5284,
+      "igst_rate": 0.0,
+      "igst_brokerage_amount": 0.0,
+      "igst_charges_amount": 0.0,
+      "igst_total_amount": 0.0
+    },
+    "securities_transaction_tax": 31556.0,
+    "stamp_duty": 39.0,
+    "net_amount_receivable_by_client": 31136447.0973,
+    "net_amount_to_be_credited_in_bank": 31136447.06
+  }
+}

@@ -43,7 +43,8 @@
       "Bash(docker push:*)",
       "Bash(echo \"Please follow these steps manually:\n\n1. Open this URL in your browser:\nhttps://accounts.google.com/o/oauth2/auth?response_type=code&client_id=803235585404-1napl4fdg6u8ojd31lu4ricg5ccrra0e.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2F&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fgmail.readonly&access_type=offline&include_granted_scopes=true&prompt=consent\n\n2. Login with tech@pkeday.com\n\n3. Grant permission (Google may add extra scopes - that''s okay)\n\n4. You''ll be redirected to: http://localhost:8080/?code=XXXXXXXX\n\n5. Copy the code (the part after ''code='') and paste it below:\n\n\")",
       "Bash(find:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git commit:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

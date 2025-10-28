@@ -1,0 +1,81 @@
+{
+  "success": true,
+  "data": {
+    "header": {
+      "contract_note_no": "ISEC/2024148/015287118",
+      "trade_date": "07-08-2024",
+      "settlement_no": "2024148",
+      "settlement_date": "08-08-2024",
+      "client_id": "5550001544",
+      "client_name": "PKEDAY ADVISORS LLP"
+    },
+    "transactions": [
+      {
+        "isin": "INE572J01011",
+        "security_name": "SPANDANA SPHOORTY FI",
+        "buy_quantity": 2190,
+        "sell_quantity": 54785,
+        "buy_wap": 598.4506,
+        "sell_wap": 593.5993,
+        "buy_value": 1311431.7978,
+        "sell_value": 32486990.0013,
+        "charges": {
+          "brokerage": 1123.204,
+          "exchange_transaction_charges": 33.8454,
+          "sebi_turnover_fees": 6359.0568,
+          "stamp_duty": 39.0,
+          "stt": 31555.9975
+        },
+        "net_payable_receivable": -31136447.0998,
+        "total_quantity": 52595.0
+      }
+    ],
+    "obligations": {
+      "pay_out_obligation": -31136447.0998,
+      "gst_details": {
+        "total_gst": 0.0
+      },
+      "taxable_value_of_supply": {
+        "total_brokerage": 1123.204,
+        "exchange_transaction_charges": 33.8454,
+        "sebi_turnover_fees": 6359.0568,
+        "total_taxable_value": 7516.1058
+      }
+    },
+    "metadata": {
+      "validation": {
+        "source_of_truth": "trade_lines",
+        "overrides": [
+          {
+            "field": "total_quantity",
+            "action": "recomputed_from_buy_sell",
+            "old_value": 0.0,
+            "new_value": 52595.0
+          }
+        ],
+        "discrepancies": [
+          {
+            "field": "total_quantity",
+            "transaction_index": 0,
+            "summary_value": 0.0,
+            "expected_value": 52595.0,
+            "calculation": "54785.0 - 2190.0 = 52595.0"
+          }
+        ],
+        "warnings": [
+          "Transaction 0: total_quantity mismatch, using calculated value"
+        ]
+      }
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "metadata": {
+    "extraction_timestamp": "2025-10-27T23:08:38.784922",
+    "pdf_path": "both.pdf",
+    "model_used": "gpt-4o",
+    "file_id": "text_extraction",
+    "total_transactions": 1,
+    "validation_errors": 0
+  }
+}
