@@ -125,12 +125,14 @@ class ISECAPIExtractor:
             logger.warning(f"Full schema file not found: {schema_file}, using compact schema for validation")
             return self.output_schema
 
-    def extract_from_pdf(self, pdf_path: str) -> ExtractionResult:
+    def extract_from_pdf(self, pdf_path: str, system_prompt: str = None, position_prompt: str = None) -> ExtractionResult:
         """
         Main extraction method using OpenAI API.
 
         Args:
             pdf_path: Path to the PDF file
+            system_prompt: Optional custom system prompt (overrides default)
+            position_prompt: Optional custom position prompt (combined with system prompt)
 
         Returns:
             ExtractionResult with extracted data and metadata
@@ -180,8 +182,8 @@ class ISECAPIExtractor:
                     metadata={}
                 )
 
-            # Extract data using OpenAI
-            extracted_data = self._extract_with_openai(file_id)
+            # Extract data using OpenAI with custom prompts if provided
+            extracted_data = self._extract_with_openai(file_id, system_prompt, position_prompt)
 
             # Validate the extracted data
             validation_errors = self._validate_extracted_data(extracted_data)
@@ -315,19 +317,26 @@ class ISECAPIExtractor:
             logger.error(f"Failed to upload PDF: {str(e)}")
             return None
 
-    def _extract_with_openai(self, file_id: str) -> Dict[str, Any]:
+    def _extract_with_openai(self, file_id: str, system_prompt: str = None, position_prompt: str = None) -> Dict[str, Any]:
         """Extract data using OpenAI API."""
         try:
             # Prepare the extraction prompt
             extraction_prompt = self._prepare_extraction_prompt()
 
-            # Create the extraction request
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[
+            # Use custom prompts if provided, otherwise use default
+            effective_system_prompt = system_prompt if system_prompt else self.system_prompt
+
+            # Combine system prompt and position prompt if both are provided
+            if position_prompt:
+                effective_system_prompt = f"{effective_system_prompt}\n\n{position_prompt}"
+
+            # Prepare request parameters based on model type
+            request_params = {
+                "model": self.model,
+                "messages": [
                     {
                         "role": "system",
-                        "content": self.system_prompt
+                        "content": effective_system_prompt
                     },
                     {
                         "role": "user",
@@ -344,14 +353,69 @@ class ISECAPIExtractor:
                             }
                         ]
                     }
-                ],
-                max_tokens=self.config["openai"]["max_tokens"],
-                temperature=self.config["openai"]["temperature"]
-            )
+                ]
+            }
+
+            # Add model-specific parameters
+            if self.model.startswith("gpt-5"):
+                # GPT-5 models use max_completion_tokens instead of max_tokens
+                request_params["max_completion_tokens"] = self.config["openai"]["max_tokens"]
+                # Note: temperature is not supported by GPT-5 models in Chat Completions API
+            else:
+                # Legacy models use max_tokens and temperature
+                request_params["max_tokens"] = self.config["openai"]["max_tokens"]
+                request_params["temperature"] = self.config["openai"].get("temperature", 0.1)
+
+            # Create the extraction request
+            response = self.client.chat.completions.create(**request_params)
 
             # Parse the response
             response_text = response.choices[0].message.content
             logger.info(f"OpenAI response received: {len(response_text)} characters")
+
+            # Debug: Check if response is empty or None
+            if not response_text:
+                logger.warning("Empty response received from OpenAI")
+                logger.warning(f"Response object: {response}")
+                logger.warning(f"Choices: {response.choices}")
+                logger.warning(f"Choice 0: {response.choices[0] if response.choices else 'No choices'}")
+                if response.choices:
+                    logger.warning(f"Message: {response.choices[0].message}")
+                    logger.warning(f"Content: {response.choices[0].message.content}")
+                    logger.warning(f"Finish reason: {response.choices[0].finish_reason}")
+
+                # Check usage information
+                if hasattr(response, 'usage') and response.usage:
+                    logger.info(f"Token usage: {response.usage}")
+
+                # If GPT-5 returns empty response, try fallback to GPT-4o
+                if self.model.startswith("gpt-5"):
+                    logger.warning(f"GPT-5 model {self.model} returned empty response, trying fallback to gpt-4o")
+                    fallback_params = request_params.copy()
+                    fallback_params["model"] = "gpt-4o"
+                    # Add back temperature and max_tokens for GPT-4o
+                    fallback_params["max_tokens"] = self.config["openai"]["max_tokens"]
+                    fallback_params["temperature"] = self.config["openai"].get("temperature", 0.1)
+                    # Remove GPT-5 specific parameters
+                    if "max_completion_tokens" in fallback_params:
+                        del fallback_params["max_completion_tokens"]
+
+                    try:
+                        logger.info("Attempting fallback extraction with GPT-4o...")
+                        fallback_response = self.client.chat.completions.create(**fallback_params)
+                        fallback_response_text = fallback_response.choices[0].message.content
+                        logger.info(f"Fallback response received: {len(fallback_response_text)} characters")
+
+                        if fallback_response_text:
+                            extracted_data = self._parse_json_response(fallback_response_text)
+                            logger.info("Successfully used GPT-4o fallback")
+                            return extracted_data
+                        else:
+                            logger.error("Fallback model also returned empty response")
+                    except Exception as fallback_error:
+                        logger.error(f"Fallback extraction failed: {str(fallback_error)}")
+
+                return {}
 
             # Extract JSON from response
             extracted_data = self._parse_json_response(response_text)

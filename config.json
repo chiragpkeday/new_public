@@ -1,8 +1,9 @@
 {
   "openai": {
-    "default_model": "gpt-4o",
+    "default_model": "gpt-5",
     "max_tokens": 8000,
     "temperature": 0.1,
+    "reasoning_effort": "high",
     "api_key_env_var": "OPENAI_API_KEY"
   },
   "extraction": {

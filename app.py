@@ -108,12 +108,16 @@ def main():
 
         # OpenAI Model Selection
         st.subheader("OpenAI Model")
-        available_models = ["gpt-4o", "gpt-4-turbo", "gpt-3.5-turbo"]
+        available_models = [
+            "gpt-5", "gpt-5-mini", "gpt-5-nano",
+            "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano",
+            "gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-3.5-turbo"
+        ]
         selected_model = st.selectbox(
             "Choose OpenAI model:",
             options=available_models,
             index=0,
-            help="Select the OpenAI model for data extraction"
+            help="Select the OpenAI model for data extraction. GPT-5 models offer enhanced reasoning capabilities, GPT-4.1 provides improved performance over GPT-4."
         )
 
         # PDF Upload
@@ -171,8 +175,8 @@ def process_pdfs(uploaded_files: List[Any], system_prompt: str, position_prompt:
         # For now, process only the first file (can be extended for multiple files)
         pdf_path = temp_files[0]
 
-        # Extract data
-        result = extractor.extract_from_pdf(pdf_path)
+        # Extract data with custom prompts
+        result = extractor.extract_from_pdf(pdf_path, system_prompt=system_prompt, position_prompt=position_prompt)
 
         # Store results
         if result.success:
