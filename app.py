@@ -116,11 +116,29 @@ def load_config():
         with open('config.json', 'r', encoding='utf-8') as f:
             return json.load(f)
     except FileNotFoundError:
+        logger.warning("config.json not found, using defaults")
         return {
             "openai": {
                 "default_model": "gpt-4o",
                 "max_tokens": 8000,
                 "temperature": 0.1
+            },
+            "pdf_reduction": {
+                "enabled": True,
+                "max_file_size_mb": 0.1
+            }
+        }
+    except Exception as e:
+        logger.error(f"Error loading config.json: {e}")
+        return {
+            "openai": {
+                "default_model": "gpt-4o",
+                "max_tokens": 8000,
+                "temperature": 0.1
+            },
+            "pdf_reduction": {
+                "enabled": True,
+                "max_file_size_mb": 0.1
             }
         }
 
@@ -365,15 +383,21 @@ def process_pdf(uploaded_file, system_prompt, position_prompt, model, config, sc
 
 # Main app
 def main():
-    st.title("📄 ISEC Contract Note Data Extractor")
-    st.markdown("Extract structured data from ISEC (ICICI Securities) contract notes using OpenAI")
-    
-    # Load defaults
-    config = load_config()
-    default_system_prompt = load_default_system_prompt()
-    default_position_prompt = load_default_position_prompt()
-    default_result = load_default_result()
-    compact_schema = load_compact_schema()
+    try:
+        st.title("📄 ISEC Contract Note Data Extractor")
+        st.markdown("Extract structured data from ISEC (ICICI Securities) contract notes using OpenAI")
+
+        # Load defaults
+        config = load_config()
+        default_system_prompt = load_default_system_prompt()
+        default_position_prompt = load_default_position_prompt()
+        default_result = load_default_result()
+        compact_schema = load_compact_schema()
+    except Exception as e:
+        st.error(f"Error initializing app: {str(e)}")
+        logger.error(f"Initialization error: {str(e)}", exc_info=True)
+        st.stop()
+        return
     
     # Initialize session state
     if 'result' not in st.session_state:
@@ -545,5 +569,10 @@ def main():
         )
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        st.error(f"Fatal error: {str(e)}")
+        logger.error(f"Fatal error in main: {str(e)}", exc_info=True)
+        st.info("Please check the logs for more details or contact support.")
 
